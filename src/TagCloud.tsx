@@ -95,12 +95,12 @@ class TagCloud extends React.Component<ITagCloudProps, ITagCloudState> {
     props: ITagCloudProps,
     state: ITagCloudState,
   ): Promise<any> {
-    const { children, spiral, random, style } = props;
-    const { width, height } = state;
+    const {children, spiral, random, style} = props;
+    const {width, height} = state;
     const spiralAny: any = spiral;
 
     return new Promise((resolve) => {
-      const words: any = React.Children.map(children, (child) => ({ child }));
+      const words: any = React.Children.map(children, (child) => ({child}));
       let res = d3Cloud()
         .size([width, height])
         .words(words)
@@ -126,9 +126,7 @@ class TagCloud extends React.Component<ITagCloudProps, ITagCloudState> {
             let y = item.y;
             y += item.y0;
             y += height / 2;
-            const transform = `translate(${x}px,${y}px) rotate(${
-              item.rotate
-            }deg)`;
+            const transform = `translate(-${x}px,${y}px) rotate(${item.rotate}deg)`;
             const newStyle = {
               position: "absolute",
               ...item.child.props.style,
@@ -235,11 +233,11 @@ class TagCloud extends React.Component<ITagCloudProps, ITagCloudState> {
       padding, // eslint-disable-line
       ...otherStyle
     } = style;
-    const { wrappedChildren } = this.state;
+    const {wrappedChildren} = this.state;
 
     return (
       <Measure bounds={true} onResize={this.onResize}>
-        {({ measureRef }) => (
+        {({measureRef}) => (
           <div ref={measureRef} {...props} style={otherStyle}>
             {wrappedChildren}
           </div>
@@ -249,7 +247,7 @@ class TagCloud extends React.Component<ITagCloudProps, ITagCloudState> {
   }
 
   public onResize = (contentRect: any) => {
-    const { width, height } = contentRect.bounds;
+    const {width, height} = contentRect.bounds;
     if (this.state.width !== width || this.state.height !== height) {
       // Handle the initial size observer immediately
       if (!this.state.width && !this.state.height) {
@@ -278,8 +276,8 @@ class TagCloud extends React.Component<ITagCloudProps, ITagCloudState> {
   }
 
   public componentDidUpdate() {
-    const { width, height } = this.state;
-    const { children } = this.props;
+    const {width, height} = this.state;
+    const {children} = this.props;
 
     if (width && height && children !== this.state.children) {
       this.calculateLayout(this.props, this.state).then((wrappedChildren) => {
